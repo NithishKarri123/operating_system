@@ -1,0 +1,36 @@
+int main()
+{
+decl
+    int a,b,tmp;
+    string sa,sb,out;
+enddecl
+
+begin
+   a = -1;
+   b = -1;
+   sa = "Enter number1:";
+   sb = "Enter number2:";
+   out = "GCD is: ";
+   tmp = exposcall("Write",-2,sa);
+   tmp = exposcall("Read",-1,a);
+  
+   tmp = exposcall("Write",-2,sb);
+   tmp = exposcall("Read",-1,b); 
+  
+    if(a < b) then
+        tmp=a;
+        a=b;
+        b=tmp;
+    endif;
+    
+    while((a%b) != 0) do
+        tmp = a%b;
+        a = b;
+        b = tmp;
+    endwhile;
+    
+    tmp = exposcall("Write",-2,out);
+    tmp = exposcall("Write",-2,b);
+    return 0;
+end
+}

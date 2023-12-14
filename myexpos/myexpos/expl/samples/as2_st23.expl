@@ -1,0 +1,47 @@
+int main()
+{
+	decl
+		int perm,temp,t,cf,t1;
+        str name;
+        str name1,command;
+	enddecl
+	begin
+        write("Enter command to");
+        write("Create or Delete");
+        read(command);
+        if(command == "Create") then
+            write("Enter name");
+            write("to create");
+            read(name);
+            write("Enter permission");
+            read(perm);
+            t1 = exposcall( "Create",name,perm);
+            if(t1 == 0) then
+	            temp = exposcall( "Write" , -2 ,"File created");
+            else
+	            temp = exposcall( "Write" , -2 ,"Inode table is full");
+                cf = 0;
+            endif;
+        endif;
+    
+        if(command == "Delete") then
+            write("Enter name");
+            write("to delete");
+            read(name1);
+            t = exposcall("Delete",name1);
+            if(t == 0) then
+                temp = exposcall( "Write" , -2 ,"File deleted!");
+            endif;
+            if(t == -1) then
+                temp = exposcall( "Write" , -2 ,"File not data!");
+            endif;
+            if(t == -2) then
+                temp = exposcall( "Write" , -2 ,"File open");
+            endif;
+            if(t == -3) then
+                temp = exposcall( "Write" , -2 ,"File not found!");
+            endif;
+        endif;
+		return 0;
+	end
+}

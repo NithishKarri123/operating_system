@@ -1,0 +1,40 @@
+
+decl
+  int fact(int n);
+enddecl
+
+int fact(int n)
+{
+  decl
+    int f;
+  enddecl
+
+  begin
+    if(n<=1) then
+      f=1;
+    else
+      f=n*fact(n-1);
+    endif;
+
+    return f;
+  end
+}
+
+int main()
+{
+  decl
+    int a,res;
+  enddecl
+
+  begin
+  a=1;
+  while(a<11) do
+    res = fact(a);
+    write(res);
+    a=a+1;
+  endwhile;
+    return 0;
+  end  
+}  
+
+

@@ -1,0 +1,53 @@
+load --library ../expl/library.lib
+load --idle /home/nithish/mynexpos/expl/samples/infinite.xsm
+load --init /home/nithish/mynexpos/expl/samples/login.xsm
+load --shell /home/nithish/mynexpos/expl/samples/shell.xsm
+load --exec /home/nithish/mynexpos/expl/samples/pgm1.xsm
+load --exec /home/nithish/mynexpos/expl/samples/pgm2.xsm
+load --exec /home/nithish/mynexpos/expl/samples/Assg1.xsm
+load --exec /home/nithish/mynexpos/expl/samples/Assg2.xsm
+load --exec /home/nithish/mynexpos/expl/samples/Assg3.xsm
+load --exec /home/nithish/mynexpos/expl/samples/Assg4.xsm
+load --exec /home/nithish/mynexpos/expl/samples/merge.xsm
+load --exec /home/nithish/mynexpos/expl/samples/m_store.xsm
+load --exec /home/nithish/mynexpos/expl/samples/m_sort.xsm
+load --exec /home/nithish/mynexpos/expl/samples/m_merge.xsm
+load --exec /home/nithish/mynexpos/expl/samples/pid.xsm
+load --exec /home/nithish/mynexpos/expl/samples/create.xsm
+load --exec /home/nithish/mynexpos/expl/samples/delete.xsm
+load --exec /home/nithish/mynexpos/expl/samples/ls.xsm
+load --exec /home/nithish/mynexpos/expl/samples/cp.xsm
+load --exec /home/nithish/mynexpos/expl/samples/lu.xsm
+load --exec /home/nithish/mynexpos/expl/samples/ru.xsm
+load --exec /home/nithish/mynexpos/expl/samples/cat.xsm
+load --exec /home/nithish/mynexpos/expl/samples/rm.xsm
+load --int=4 /home/nithish/mynexpos/nespl/spl_progs/int4.xsm
+load --int=5 /home/nithish/mynexpos/nespl/spl_progs/int5.xsm
+load --int=6 /home/nithish/mynexpos/nespl/spl_progs/int6.xsm
+load --int=7 /home/nithish/mynexpos/nespl/spl_progs/int7.xsm
+load --int=8 /home/nithish/mynexpos/nespl/spl_progs/int8.xsm
+load --int=9 /home/nithish/mynexpos/nespl/spl_progs/int9.xsm
+load --int=10 /home/nithish/mynexpos/nespl/spl_progs/int10.xsm
+load --int=11 /home/nithish/mynexpos/nespl/spl_progs/int11.xsm
+load --int=12 /home/nithish/mynexpos/nespl/spl_progs/int12.xsm
+load --int=13 /home/nithish/mynexpos/nespl/spl_progs/int13.xsm
+load --int=14 /home/nithish/mynexpos/nespl/spl_progs/int14.xsm
+load --int=15 /home/nithish/mynexpos/nespl/spl_progs/int15.xsm
+load --int=16 /home/nithish/mynexpos/nespl/spl_progs/int16.xsm
+load --int=17 /home/nithish/mynexpos/nespl/spl_progs/int17.xsm
+load --int=console /home/nithish/mynexpos/nespl/spl_progs/console_int.xsm
+load --int=disk /home/nithish/mynexpos/nespl/spl_progs/disk_int.xsm
+load --module 0 /home/nithish/mynexpos/nespl/spl_progs/MOD_0.xsm
+load --module 1 /home/nithish/mynexpos/nespl/spl_progs/MOD_1.xsm
+load --module 2 /home/nithish/mynexpos/nespl/spl_progs/MOD_2.xsm
+load --module 3 /home/nithish/mynexpos/nespl/spl_progs/MOD_3.xsm
+load --module 4 /home/nithish/mynexpos/nespl/spl_progs/MOD_4.xsm
+load --module 5 /home/nithish/mynexpos/nespl/spl_progs/MOD_5.xsm
+load --module 6 /home/nithish/mynexpos/nespl/spl_progs/MOD_6.xsm
+load --module 7 /home/nithish/mynexpos/nespl/spl_progs/MOD_7.xsm
+load --module 8 /home/nithish/mynexpos/nespl/spl_progs/MOD_8.xsm
+load --exhandler /home/nithish/mynexpos/nespl/spl_progs/exception_handler.xsm
+load --int=timer /home/nithish/mynexpos/nespl/spl_progs/timer.xsm
+load --os=primary /home/nithish/mynexpos/nespl/spl_progs/OStartup.xsm
+load --os=secondary /home/nithish/mynexpos/nespl/spl_progs/OStartupSec.xsm
+exit

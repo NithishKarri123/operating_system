@@ -1,0 +1,126 @@
+// <OD 7
+loadi(54, 67);
+loadi(55, 68);
+
+// Load the idle code from disk to memory (mem, disk) (Only one page is required)
+loadi(69, 11);
+
+// Secondary bootstrap loader
+loadi(128, 512);
+loadi(129, 513);
+
+// Access Control module
+loadi(132, 516);
+loadi(133, 517);
+
+SP = (76 * 512) - 1;  
+call BOOT_MODULE;  
+
+alias i R1;
+// tick value
+i = 0;
+while (i < MAX_PROC_NUM) do
+    [PROCESS_TABLE + (i * PT_ENTRY_SIZE)] = 0;
+    i = i + 1;
+endwhile;
+
+[PROCESS_TABLE + 1] = 0;        // PID
+[PROCESS_TABLE + 3] = 0;        // User ID
+[PROCESS_TABLE + 4] = RUNNING;  // state
+[PROCESS_TABLE + 11] = 76;      // User Area Page number
+[PROCESS_TABLE + 13] = 8 * 512; // UPTR
+[PROCESS_TABLE + 12] = 0;       // KPTR
+[PROCESS_TABLE + 14] = PAGE_TABLE_BASE; 
+[PROCESS_TABLE + 15] = 10;      
+
+[SYSTEM_STATUS_TABLE + 1] = 0;
+
+PTBR = PAGE_TABLE_BASE;
+
+// For the IDLE Process
+// Library
+[PTBR + 0] = -1;
+[PTBR + 1] = "0000";
+[PTBR + 2] = -1;
+[PTBR + 3] = "0000";
+
+// Heap
+[PTBR + 4] = -1;
+[PTBR + 5] = "0000";
+[PTBR + 6] = -1;
+[PTBR + 7] = "0000";
+
+// Code
+[PTBR + 8] = 69;
+[PTBR + 9] = "0100";
+[PTBR + 10] = -1;
+[PTBR + 11] = "0000";
+[PTBR + 12] = -1;
+[PTBR + 13] = "0000";
+[PTBR + 14] = -1;
+[PTBR + 15] = "0000";
+
+// Stack
+[PTBR + 16] = 70;         // Allocate second code page (70) as user stack page for idle
+[PTBR + 17] = "0110";
+[PTBR + 18] = -1;
+[PTBR + 19] = "0000";
+
+PTLR = 10;
+
+SP = 8 * 512;  
+
+[70 * 512] = [69 * 512 + 1];  
+
+// Initialize the Swapper Daemon
+PTBR = PAGE_TABLE_BASE + 20 * 15;
+
+// Page Table for Swapper Daemon
+// Library
+[PTBR + 0] = -1;
+[PTBR + 1] = "0000";
+[PTBR + 2] = -1;
+[PTBR + 3] = "0000";
+
+// Heap
+[PTBR + 4] = -1;
+[PTBR + 5] = "0000";
+[PTBR + 6] = -1;
+[PTBR + 7] = "0000";
+
+// Code
+[PTBR + 8] = 69;
+[PTBR + 9] = "0100";
+[PTBR + 10] = -1;
+[PTBR + 11] = "0000";
+[PTBR + 12] = -1;
+[PTBR + 13] = "0000";
+[PTBR + 14] = -1;
+[PTBR + 15] = "0000";
+
+// Stack
+[PTBR + 16] = 81;         // Allocate second code page (81) as user stack page for swapper
+[PTBR + 17] = "0110";
+[PTBR + 18] = -1;
+[PTBR + 19] = "0000";
+
+alias swapper_proc R1;
+swapper_proc = PROCESS_TABLE + (SWAPPER_DAEMON * PT_ENTRY_SIZE);
+
+[swapper_proc + 3] = 0;         // User ID
+[swapper_proc + 1] = SWAPPER_DAEMON;  // PID
+[swapper_proc + 4] = CREATED;     // state
+[swapper_proc + 11] = 82;        // User Area Page number
+[swapper_proc + 13] = 8 * 512;   // UPTR
+[swapper_proc + 12] = 0;         // Setting KPTR
+[swapper_proc + 14] = PTBR;      // Setting PTBR
+[swapper_proc + 15] = 10;        // Setting PTLR
+
+[81 * 512] = [69 * 512 + 1];
+
+start;      
+
+PTBR = PAGE_TABLE_BASE;
+PTLR = 10;
+
+ireturn;

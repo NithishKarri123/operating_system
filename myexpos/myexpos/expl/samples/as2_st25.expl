@@ -1,0 +1,42 @@
+decl
+    int fd,p,temp,i,check,word;
+    string filename,inp1,inp2,inp3;
+enddecl
+
+int main()
+{
+begin
+    inp1 = "Enter ";
+    inp2 = "FileName";
+    temp = exposcall("Write",-2,inp1);
+    temp = exposcall("Write",-2,inp2);
+    temp = exposcall("Read",-1,filename);
+
+
+
+    fd = exposcall("Open",filename);
+
+    //Moving to end
+    temp = exposcall("Seek",fd,10000);
+    check = 1;
+
+    i = 2000;
+    while(i<2514)do
+        temp = exposcall("Write",fd,i);
+        i = i + 1;
+    endwhile;
+
+    //Moving back by 1
+    temp = exposcall("Seek",fd,-1);
+    check = 1;
+
+    //Printing while moving Seek back
+    while(check != -2)do
+        temp = exposcall("Read",fd,word);
+        temp = exposcall("Write",-2,word);
+        check = exposcall("Seek",fd,-2);
+    endwhile;
+
+    return 0;
+end
+}

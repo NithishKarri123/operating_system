@@ -1,0 +1,37 @@
+decl
+int ar[100];
+enddecl
+int main(){
+	decl
+	int n,i,j,k;
+	enddecl
+	begin
+	k=exposcall("Read",-1,n);
+	i=0;
+	while(i<n)do
+		k=exposcall("Read",-1,j);
+		ar[i]=j;
+		i=i+1;
+	endwhile;
+	i=0;
+	while(i<n)do
+		j=0;
+		while(j< (n-1))do
+			if(ar[j]>ar[j+1])then
+				k=ar[j];
+				ar[j]=ar[j+1];
+				ar[j+1]=k;
+			endif;
+			j=j+1;
+		endwhile;
+		i=i+1;
+	endwhile;
+	i=0;
+	while(i<n)do
+		j=ar[i];
+		k=exposcall("Write",-2,j);
+		i=i+1;
+	endwhile;
+	return 0;
+	end	
+}

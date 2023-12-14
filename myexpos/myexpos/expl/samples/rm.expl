@@ -1,0 +1,18 @@
+int main()
+{
+    decl
+        int a,temp,fd,i,ret;
+        str input,inv,x,winp,rinp;
+    enddecl
+    begin
+        x="NULL";
+        rinp = "Deleted";
+        winp = "or Nvr there.";
+        temp = exposcall("Read",-1,input);
+        temp = exposcall("Delete",input);
+        temp = exposcall("Write",-2,rinp);
+        temp = exposcall("Write",-2,winp);
+
+        return 0;
+    end
+}

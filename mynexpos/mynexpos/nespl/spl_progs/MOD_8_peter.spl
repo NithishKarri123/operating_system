@@ -1,0 +1,103 @@
+alias functionNum R1;
+alias currPID R2;
+
+multipush(R3,R4);
+
+
+//unused 5 bits in the access lock table
+alias  FLAGS_KERN_LOCK R3;
+FLAGS_KERN_LOCK = 29579;
+
+alias  FLAGS_SCHED_LOCK R4;
+FLAGS_SCHED_LOCK = 29581;
+//both of them are 2 word flags
+
+
+
+//Acquire Kern Lock
+if (functionNum == 1)then
+
+    currPID = [SYSTEM_STATUS_TABLE + 6];
+
+    //If core is secondary
+    if (CORE == 1)then
+
+        //If paging status on or logout_status is on
+        if ( [SYSTEM_STATUS_TABLE + 5] != 0 ||  [SYSTEM_STATUS_TABLE + 7] == 1 )then
+            [ PROCESS_TABLE + 16*currPID + 4 ] = READY;
+            call SCHEDULER;
+        endif;
+    endif;
+
+    multipush(R0);
+    alias coreVal R0;
+    
+    
+    if(CORE == PRIMARY_CORE) then
+    	coreVal = SECONDARY_CORE;
+    else
+    	coreVal = PRIMARY_CORE;
+    endif;
+    
+    
+    [FLAGS_KERN_LOCK + CORE ] = 1;
+    [KERN_LOCK] = coreVal;
+    
+    
+    while([FLAGS_KERN_LOCK + coreVal ] == 1 && [KERN_LOCK] == coreVal) do
+    	continue;
+    endwhile;
+    
+    
+    multipop(R0);
+    multipop(R3,R4);
+    return;
+
+
+endif;
+
+//Acquire Sched Lock
+if (functionNum == 2)then
+
+    multipush(R0);
+    alias coreVal R0;
+    
+    
+    if(CORE == PRIMARY_CORE) then
+    	coreVal = SECONDARY_CORE;
+    else
+    	coreVal = PRIMARY_CORE;
+    endif;
+    
+    
+    [FLAGS_SCHED_LOCK + CORE ] = 1;
+    [SCHED_LOCK] = coreVal;
+    
+    
+    while([FLAGS_SCHED_LOCK + coreVal ] == 1 && [SCHED_LOCK] == coreVal) do
+    	continue;
+    endwhile;
+    
+    
+    multipop(R0);
+    multipop(R3,R4);
+    return;
+
+endif;
+
+//Release Any Lock
+if (functionNum == 4)then
+    alias LockVarAddr R2;
+
+    if (LockVarAddr == KERN_LOCK) then
+    	[FLAGS_KERN_LOCK + CORE] = 0;
+    else 
+    	[FLAGS_SCHED_LOCK + CORE ] = 0;
+    endif;
+    
+    multipop(R3,R4);
+    return;
+
+endif;
+
+return;
